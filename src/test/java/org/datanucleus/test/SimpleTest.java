@@ -53,11 +53,11 @@ public class SimpleTest
             
             
             JDOQLTypedQueryImpl<Person> personQuery = new JDOQLTypedQueryImpl<>(pm, Person.class);
-            JDOConnection personConnection = personQuery.getPersistenceManager().getDataStoreConnection();
-            // personConnection.getNativeConnection().toString() should be something like: 1806431167, URL=jdbc:hsqldb:mem:test, UserName=SA, HSQL Database Engine Driver
-            System.out.println("personConnection: " + personConnection.getNativeConnection().toString());
-            assertEquals("personConnection should point to 'jdbc:hsqldb:mem:test'", " URL=jdbc:hsqldb:mem:test", personConnection.getNativeConnection().toString().split(",")[1]);
-            personConnection.close();
+//            JDOConnection personConnection = personQuery.getPersistenceManager().getDataStoreConnection();
+//            // personConnection.getNativeConnection().toString() should be something like: 1806431167, URL=jdbc:hsqldb:mem:test, UserName=SA, HSQL Database Engine Driver
+//            System.out.println("personConnection: " + personConnection.getNativeConnection().toString());
+//            assertEquals("personConnection should point to 'jdbc:hsqldb:mem:test'", " URL=jdbc:hsqldb:mem:test", personConnection.getNativeConnection().toString().split(",")[1]);
+//            personConnection.close();
             
             Person queriedPerson = personQuery.executeUnique();
             assertNotNull("queriedPerson should not be null", queriedPerson);
@@ -66,13 +66,13 @@ public class SimpleTest
             
             // Describe connection used for OtherPerson:
             JDOQLTypedQueryImpl<OtherPerson> otherPersonQuery = new JDOQLTypedQueryImpl<>(pm, OtherPerson.class);
-            JDOConnection otherPersonConnection = otherPersonQuery.getPersistenceManager().getDataStoreConnection();
-            // otherPersonConnection.getNativeConnection().toString() should be something like: 1392794732, URL=jdbc:hsqldb:mem:test_other, UserName=SA, HSQL Database Engine Driver
-            System.out.println("otherPersonConnection: " + otherPersonConnection.getNativeConnection().toString());
+//            JDOConnection otherPersonConnection = otherPersonQuery.getPersistenceManager().getDataStoreConnection();
+//            // otherPersonConnection.getNativeConnection().toString() should be something like: 1392794732, URL=jdbc:hsqldb:mem:test_other, UserName=SA, HSQL Database Engine Driver
+//            System.out.println("otherPersonConnection: " + otherPersonConnection.getNativeConnection().toString());
             
             // Comment out the assertion on the following line to see the pragmatic assert fail below
-            assertEquals("otherPersonConnection should point to 'jdbc:hsqldb:mem:test_other'", " URL=jdbc:hsqldb:mem:test_other", otherPersonConnection.getNativeConnection().toString().split(",")[1]);
-            otherPersonConnection.close();
+//            assertEquals("otherPersonConnection should point to 'jdbc:hsqldb:mem:test_other'", " URL=jdbc:hsqldb:mem:test_other", otherPersonConnection.getNativeConnection().toString().split(",")[1]);
+//            otherPersonConnection.close();
             
             OtherPerson queriedOtherPerson = otherPersonQuery.executeUnique();
             otherPersonQuery.close();
