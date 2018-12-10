@@ -58,7 +58,10 @@ public class ArrayParamTest
 				Person person3 = new Person(3,"Mr Foo3");
 				pm.makePersistent(person3);
             tx.commit();
-            Integer[] idsList = new Integer[] {1,3};
+            // using primitive int data type causes error
+            int[] idsList = new int[] {1,3};
+            // using wrapped Integer data type works as expected
+//            Integer[] idsList = new Integer[] {1,3};
             JDOQLTypedQueryImpl<Person> query = new JDOQLTypedQueryImpl<>(pm, Person.class);
             QPerson cand = QPerson.candidate();
             query.filter(
