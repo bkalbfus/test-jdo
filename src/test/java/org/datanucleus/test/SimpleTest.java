@@ -14,13 +14,28 @@ import javax.jdo.datastore.JDOConnection;
 
 import org.datanucleus.api.jdo.query.JDOQLTypedQueryImpl;
 import org.datanucleus.util.NucleusLogger;
+import org.junit.After;
 import org.junit.Test;
+
 
 import mydomain.model.OtherPerson;
 import mydomain.model.Person;
 
 public class SimpleTest
 {
+	
+@After
+public void tearDown() {
+	PersistenceManagerFactory pmf = JDOHelper.getPersistenceManagerFactory("MyTest");
+	PersistenceManager pm = pmf.getPersistenceManager();
+	JDOQLTypedQueryImpl<Person> personQuery = new JDOQLTypedQueryImpl(pm,Person.class);
+	JDOQLTypedQueryImpl<OtherPerson> otherPersonQuery = new JDOQLTypedQueryImpl(pm,OtherPerson.class);
+    Transaction tx = pm.currentTransaction();
+    tx.begin();
+    personQuery.deletePersistentAll();
+    otherPersonQuery.deletePersistentAll();
+}
+	
     @Test
     public void testSimple()
     {
