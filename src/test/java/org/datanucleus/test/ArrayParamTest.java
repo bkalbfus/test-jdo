@@ -1,6 +1,7 @@
 package org.datanucleus.test;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.Arrays;
@@ -59,17 +60,22 @@ public class ArrayParamTest
 				pm.makePersistent(person3);
             tx.commit();
             // using primitive int data type causes error
-            int[] idsList = new int[] {1,3};
+//            int[] idsList = new int[] {1,3};
             // using wrapped Integer data type works as expected
-//            Integer[] idsList = new Integer[] {1,3};
+            Integer[] idsList = new Integer[] {1,3};
+            List listIdsList = Arrays.asList(idsList);
+            assertTrue("Arrays.asList({an array}) should return a list of the elements in the array!",listIdsList.size() == 2);
+            
+            
             JDOQLTypedQueryImpl<Person> query = new JDOQLTypedQueryImpl<>(pm, Person.class);
             QPerson cand = QPerson.candidate();
             query.filter(
-            		((ListExpression<List<Number>, Number> ) query.listParameter("ids")).contains(cand.id)
+            		((ListExpression<List<Number>, Number> ) query.listParameter("ids")).contains(cand.id).neg()
             		);
             query = (JDOQLTypedQueryImpl<Person>) query.setParameter("ids", Arrays.asList(idsList));
             List<Person> result = query.executeList();
             assertNotNull(result);
+            assertTrue("result should have the one id not in the list",result.size() == 1);
             
         }
         catch (Throwable thr)
@@ -91,4 +97,5 @@ public class ArrayParamTest
         pmf.close();
         NucleusLogger.GENERAL.info(">> test END");
     }
+    
 }
